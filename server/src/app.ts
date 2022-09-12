@@ -9,9 +9,9 @@ import morgan from "morgan";
 const app: Express = express();
 
 app.use(
-    cors({
-        origin: "http://localhost:3000"
-    })
+  cors({
+    origin: "http://localhost:3000",
+  })
 );
 
 const publicDirectoryPath = "../public";
@@ -19,7 +19,7 @@ const publicDirectoryPath = "../public";
 app.use(morgan("combined"));
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, publicDirectoryPath)))
+app.use(express.static(path.join(__dirname, publicDirectoryPath)));
 
 app.use(helmet());
 app.use(bodyParser.json());
