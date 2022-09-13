@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const expenseSchema = mongoose.Schema({
+const expenseSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
@@ -16,7 +16,8 @@ const expenseSchema = mongoose.Schema({
     },
     owner: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     }
 });
 
