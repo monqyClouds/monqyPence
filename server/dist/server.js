@@ -15,11 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = __importDefault(require("http"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const app_1 = __importDefault(require("./app"));
+const mongo_1 = __importDefault(require("./services/mongo"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 8000;
 const server = http_1.default.createServer(app_1.default);
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
+        yield (0, mongo_1.default)();
         server.listen(PORT, () => {
             console.log(`listening on port ${PORT}`);
         });

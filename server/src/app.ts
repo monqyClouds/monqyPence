@@ -1,11 +1,15 @@
 import path from "path";
 
 import express, { Express, Request, Response } from "express";
-import bodyParser from "body-parser";
+// import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
+import api from "./routes/api";
+
+const publicDirectoryPath = "../public";
 const app: Express = express();
 
 app.use(
@@ -14,16 +18,17 @@ app.use(
   })
 );
 
-const publicDirectoryPath = "../public";
-
 app.use(morgan("combined"));
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, publicDirectoryPath)));
 
+app.use(cookieParser("gig-Emm!!"))
+
+app.use(api);
+
 app.use(helmet());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, publicDirectoryPath, "/index.html"));
