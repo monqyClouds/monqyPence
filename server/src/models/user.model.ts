@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
 export interface IUser {
+	_id?: string,
 	username: string;
 	password: string;
 	token?: string;
@@ -14,7 +15,8 @@ interface IUserMethods {
 
 interface UserModel extends Model<IUser, {}, IUserMethods> {
 	findByCredentials: (
-		param: IUser
+		username: string,
+		password: string
 	) => Promise<
 		Document<unknown, any, IUser> & IUser & { _id: ObjectId } & IUserMethods
 	>;

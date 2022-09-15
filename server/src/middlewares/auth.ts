@@ -18,7 +18,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
 
 		if (!user) {
 			res.status(401);
-			return res.redirect("/login");
+			return res.redirect("/logout");
 		}
 
 		req.token = token;
@@ -27,11 +27,11 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
 	} catch (err) {
         console.log(err);
 		res.status(501);
-		return res.redirect("/login");
+		return res.redirect("/logout");
 	}
 };
 
-async function verifyToken(token: string) {
+export async function verifyToken(token: string) {
     const decoded = jwt.verify(token, "gig-Em!") as JwtPayload;
 
     const user = await User.findOne({
@@ -42,4 +42,4 @@ async function verifyToken(token: string) {
     return user as Promise<typeof user> | null;
 }
 
-export default { auth, verifyToken };
+export default auth;

@@ -1,12 +1,15 @@
+import Expense from "../../models/expense.model";
+
 interface Expense {
     amount: number,
     title: string,
-    owner: string,
+    owner?: string,
     date: Date,
 }
 
-function createNewExpense(expenseData:Expense) {
+export async function createNewExpense(expenseData:Expense) {
     console.log(expenseData);
+    const expense = Expense.create(expenseData);
 
-    return {...expenseData, _id: "nicely"}
+    return (await expense).toObject();
 }
