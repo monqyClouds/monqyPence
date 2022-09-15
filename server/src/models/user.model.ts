@@ -1,4 +1,4 @@
-import mongoose, { Model } from "mongoose";
+import mongoose, { Model, Document, ObjectId } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
@@ -12,7 +12,13 @@ interface IUserMethods {
 	generateAuthToken(): string;
 }
 
-type UserModel = Model<IUser, {}, IUserMethods>;
+interface UserModel extends Model<IUser, {}, IUserMethods> {
+	findByCredentials: (
+		param: IUser
+	) => Promise<
+		Document<unknown, any, IUser> & IUser & { _id: ObjectId } & IUserMethods
+	>;
+}
 
 export const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
 	username: {
@@ -28,6 +34,23 @@ export const userSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
 		type: String,
 	},
 });
+
+userSchema.statics.findByCredentials = async (username, password) => {
+	const user = await User.findOne({ username });
+
+	if (!user) {
+		throw new Error("Unable to login");
+	}
+
+	const passwordMatch = await bcrypt.compare(password, user.password);
+
+	if (!passwordMatch) {
+		console.log("invalid password");
+		throw new Error("Unable to login");
+	}
+
+	return user;
+};
 
 userSchema.methods.generateAuthToken = function () {
 	const user = this;
