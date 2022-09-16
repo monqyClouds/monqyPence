@@ -13,25 +13,24 @@ const publicDirectoryPath = "../public";
 const app: Express = express();
 
 app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
+	cors({
+		origin: "http://localhost:3000",
+	})
 );
-
-app.use(morgan("combined"));
-
-app.use(express.json());
-app.use(express.urlencoded({extended: true}))
-app.use(express.static(path.join(__dirname, publicDirectoryPath)));
-
-app.use(cookieParser("gig-Emm!!"))
-
-app.use(api);
 
 app.use(helmet());
 
+app.use(cookieParser("gig-Emm!!"));
+app.use(morgan("combined"));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, publicDirectoryPath)));
+
+app.use(api);
+
 app.get("/", (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, publicDirectoryPath, "/index.html"));
+	res.sendFile(path.join(__dirname, publicDirectoryPath, "/index.html"));
 });
 
 export default app;

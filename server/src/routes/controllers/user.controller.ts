@@ -18,5 +18,5 @@ export async function getUser(userData: IUser) {
 	const token = user.generateAuthToken();
 	user.token = token;
 	await user.save();
-	return { username: user.username, expenses: expenses };
+	return { username: user.username, expenses: expenses, token };
 }

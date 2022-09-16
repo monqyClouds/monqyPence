@@ -9,7 +9,14 @@ interface Expense {
 
 export async function createNewExpense(expenseData:Expense) {
     console.log(expenseData);
-    const expense = Expense.create(expenseData);
+    const expense = await Expense.create(expenseData);
 
-    return (await expense).toObject();
+
+
+    return ({
+        title: expense.title,
+        amount: expense.amount,
+        date: expense.date,
+        id: expense._id.toString(),
+    });
 }

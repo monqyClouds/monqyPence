@@ -1,31 +1,42 @@
-import express, {Request, Response} from "express";
+import express, { Request, Response } from "express";
 import auth from "../../middlewares/auth";
 import { createNewExpense } from "../controllers/expense.controller";
 
 const expenseRouter = express.Router();
 
-expenseRouter.post("/", auth, async (req: Request, res: Response) => {
-    const {title, amount}: {title: string, amount: number} = req.body;
+expenseRouter.post("/", auth,  async (req: Request, res: Response) => {
+	const { title, amount, date }: { title: string; amount: number; date: Date } =
+		req.body;
 
-    if (!title.trim() || !amount || amount <= 0) return res.status(400).json("invalid expense");
+	console.log(req.body);
 
-    const date = new Date(Date.now());
-    const owner = req.user._id;
+    
 
-    try {
-        const expenseData = {
-            amount: amount,
-            title: title.trim(),
-            date,
-            owner,
-        }
-        const expense = await createNewExpense(expenseData);
+	if (
+		typeof title !== "string" ||
+		typeof amount !== "number" ||
+		typeof date !== "string"
+	)
+		return res.status(400).json();
 
-        return res.json(expense)
-    } catch (err) {
-        return res.status(500).json("error adding expense");
-    }
+	if (!title.trim() || !amount || amount <= 0)
+		return res.status(400).json("invalid expense");
 
+	const owner = req.user._id;
+
+	try {
+		const expenseData = {
+			amount: amount,
+			title: title.trim(),
+			date: new Date(date),
+			owner,
+		};
+		const expense = await createNewExpense(expenseData);
+
+		return res.json(expense);
+	} catch (err) {
+		return res.status(500).json("error adding expense");
+	}
 });
 
 export default expenseRouter;

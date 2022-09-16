@@ -15,10 +15,18 @@ userRouter.post("/signin", async (req: Request, res: Response) => {
 	if (!isValidUsername || !isValidPassword) return res.status(400).json();
 
 	try {
-		const userData = await getUser({ username: username.trim(), password });
-		return res.json(userData);
+		const { token, expenses } = await getUser({
+			username: username.trim(),
+			password,
+		});
+
+		res.cookie("uid", token, { signed: true, maxAge: 18000000 });
+        console.log("cookie created");
+
+		return res.status(200).json({ username: userData.username, expenses });
+
 	} catch (err: any) {
-        console.log(err);
+		console.log(err);
 		if (err.message === "Unable to login") {
 			return res.status(401).json("Invalid details");
 		}
@@ -47,6 +55,11 @@ userRouter.post("/signup", async (req: Request, res: Response) => {
 		}
 		res.status(500).json("server error");
 	}
+});
+
+userRouter.get("/logout", (req: Request, res: Response) => {
+	res.clearCookie("uid");
+	return res.status(200).json();
 });
 
 export default userRouter;
