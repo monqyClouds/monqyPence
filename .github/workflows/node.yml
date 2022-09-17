@@ -9,11 +9,11 @@ jobs:
     env: 
       CI: true
       MONGO_URL: mongodb://localhost:27017/monqypence
+    runs-on: ubuntu-latest
     strategy: 
       matrix: 
-        node-version: [16 18 ]
+        node-version: [ 14 16 ]
         mongodb-version: ['6.0', '4.4']
-    runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v3
       - name: Use Node.js version ${{ matrix.node-version }}
