@@ -1,4 +1,4 @@
-name: MONQY-PENCE Project CI
+name: MONQYPENCE Project CI
 on: 
   push: 
     banches: [ main ]
@@ -8,7 +8,7 @@ jobs:
   build:
     env: 
       CI: true
-      MONGO_URL: mongodb://localhost/monqy-pence
+      MONGO_URL: mongodb://localhost:27017/monqy-pence
     strategy: 
       matrix: 
         node-version: [ 16.x ]

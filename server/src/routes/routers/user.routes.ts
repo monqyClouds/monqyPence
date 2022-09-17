@@ -21,12 +21,10 @@ userRouter.post("/signin", async (req: Request, res: Response) => {
 		});
 
 		res.cookie("uid", token, { signed: true, maxAge: 18000000 });
-        console.log("cookie created");
 
 		return res.status(200).json({ username: userData.username, expenses });
 
 	} catch (err: any) {
-		console.log(err);
 		if (err.message === "Unable to login") {
 			return res.status(401).json("Invalid details");
 		}

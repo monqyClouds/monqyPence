@@ -4,13 +4,9 @@ import { createNewExpense } from "../controllers/expense.controller";
 
 const expenseRouter = express.Router();
 
-expenseRouter.post("/", auth,  async (req: Request, res: Response) => {
+expenseRouter.post("/", auth, async (req: Request, res: Response) => {
 	const { title, amount, date }: { title: string; amount: number; date: Date } =
 		req.body;
-
-	console.log(req.body);
-
-    
 
 	if (
 		typeof title !== "string" ||
@@ -19,7 +15,7 @@ expenseRouter.post("/", auth,  async (req: Request, res: Response) => {
 	)
 		return res.status(400).json();
 
-	if (!title.trim() || !amount || amount <= 0)
+	if (title.trim() === "" || amount <= 0)
 		return res.status(400).json("invalid expense");
 
 	const owner = req.user._id;
@@ -35,6 +31,7 @@ expenseRouter.post("/", auth,  async (req: Request, res: Response) => {
 
 		return res.json(expense);
 	} catch (err) {
+		console.log(err);
 		return res.status(500).json("error adding expense");
 	}
 });

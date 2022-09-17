@@ -13,9 +13,21 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const api_1 = __importDefault(require("./routes/api"));
 const publicDirectoryPath = "../public";
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)({
-    origin: "http://localhost:3000",
-}));
+const allowedOrigins = ["http://localhost:3000"];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (origin && allowedOrigins.includes(origin)) {
+            callback(null, true);
+        }
+        else {
+            var msg = "The CORS policy for this site does not allow access from the specified origin.";
+            callback(new Error(msg), false);
+        }
+    },
+    optionsSuccessStatus: 200,
+    credentials: true,
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use((0, helmet_1.default)());
 app.use((0, cookie_parser_1.default)("gig-Emm!!"));
 app.use((0, morgan_1.default)("combined"));
