@@ -1,6 +1,18 @@
 import mongoose from "mongoose";
 
-// const MONGO_URL = process.env.MONGO_URL_DEV!!;
+declare global {
+	namespace NodeJS {
+		interface ProcessEnv {
+			NODE_ENV: "development" | "production";
+			PORT?: string;
+		}
+	}
+}
+
+const MONGO_URL =
+	process.env.NODE_ENV === "development"
+		? process.env.MONGO_URL_DEV!!
+		: process.env.MONGO_URL!!;
 
 mongoose.connection.once("open", () => {
 	console.log("MongoDB connection ready");
@@ -11,7 +23,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 async function mongoConnect() {
-	await mongoose.connect("mongodb://127.0.0.1:27017/monqypence");
+	await mongoose.connect(MONGO_URL);
 }
 
 export async function mongoDisconnect() {

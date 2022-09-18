@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = __importDefault(require("http"));
 const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const app_1 = __importDefault(require("./app"));
 const mongo_1 = __importDefault(require("./services/mongo"));
-dotenv_1.default.config();
 const PORT = process.env.PORT || 8000;
 const server = http_1.default.createServer(app_1.default);
 function startServer() {

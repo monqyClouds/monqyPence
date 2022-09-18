@@ -1,11 +1,10 @@
 import http from "http";
 
 import dotenv from "dotenv";
+dotenv.config();
 
 import app from "./app";
 import mongoConnect from "./services/mongo";
-
-dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 
