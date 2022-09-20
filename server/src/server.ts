@@ -6,7 +6,7 @@ dotenv.config();
 import app from "./app";
 import mongoConnect from "./services/mongo";
 
-const PORT = process.env.PORT || 8000;
+const PORT = 8000;
 
 const server = http.createServer(app);
 
