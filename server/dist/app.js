@@ -16,7 +16,8 @@ const app = (0, express_1.default)();
 const allowedOrigins = ["http://localhost:3000"];
 const corsOptions = {
     origin: function (origin, callback) {
-        if (origin && allowedOrigins.includes(origin)) {
+        console.log(origin);
+        if (!origin || allowedOrigins.indexOf(origin) === -1) {
             callback(null, true);
         }
         else {

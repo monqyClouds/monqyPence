@@ -18,7 +18,8 @@ const corsOptions: CorsOptions = {
 		origin: string | undefined,
 		callback: (a: Error | null, b: boolean) => void
 	) {
-		if (origin && allowedOrigins.includes(origin)) {
+		console.log(origin);
+		if (!origin || allowedOrigins.indexOf(origin) === -1) {
 			callback(null, true);
 		} else {
 			var msg =
