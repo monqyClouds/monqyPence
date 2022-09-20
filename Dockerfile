@@ -1,4 +1,4 @@
-FROM node:17-alpine
+FROM node:18-alpine
 
 WORKDIR /app 
 
@@ -14,9 +14,10 @@ COPY client/ client/
 RUN npm run build --prefix client
 
 COPY server/ server/
+RUN npm run build --prefix server
 
 USER node
 
-CMD [ "npm", "start" , "--prefix", "server" ]
+CMD [ "npm", "run", "start" ]
 
 EXPOSE 8000

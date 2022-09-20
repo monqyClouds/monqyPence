@@ -13,24 +13,29 @@ const publicDirectoryPath = "../public";
 const app: Express = express();
 
 const allowedOrigins = ["http://localhost:3000"];
-const corsOptions: CorsOptions = {
-	origin: function (
-		origin: string | undefined,
-		callback: (a: Error | null, b: boolean) => void
-	) {
-		if (!origin || !allowedOrigins.includes(origin)) {
-			callback(null, true);
-		} else {
-			var msg =
-				"The CORS policy for this site does not allow access from the specified origin.";
-			callback(new Error(msg), false);
-		}
-	},
-	optionsSuccessStatus: 200,
-	credentials: true,
-};
 
-app.use(cors(corsOptions));
+if (process.env.NODE_ENV === "development") {
+	const corsOptions: CorsOptions = {
+		origin: function (
+			origin: string | undefined,
+			callback: (a: Error | null, b: boolean) => void
+		) {
+			if (!origin || !allowedOrigins.includes(origin)) {
+				callback(null, true);
+			} else {
+				var msg =
+					"The CORS policy for this site does not allow access from the specified origin.";
+				callback(new Error(msg), false);
+			}
+		},
+		optionsSuccessStatus: 200,
+		credentials: true,
+	};
+	
+	app.use(cors(corsOptions));
+} else {
+	app.use(cors())
+}
 
 app.use(helmet());
 
