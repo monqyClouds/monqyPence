@@ -17,7 +17,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const app_1 = __importDefault(require("./app"));
 const mongo_1 = __importDefault(require("./services/mongo"));
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 const server = http_1.default.createServer(app_1.default);
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {

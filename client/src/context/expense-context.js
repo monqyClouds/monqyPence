@@ -150,7 +150,7 @@ async function expenseRequest(expenseData, isAddExpense) {
 	}
 
 	try {
-		const res = await fetch("http://localhost:8000/expense", {
+		const res = await fetch("/expense", {
 			method: isAddExpense ? "POST" : "DELETE",
 			credentials: "include",
 			headers: {

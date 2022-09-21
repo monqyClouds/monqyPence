@@ -2,7 +2,7 @@ import path from "path";
 
 import express, { Express, Request, Response } from "express";
 // import bodyParser from "body-parser";
-import helmet from "helmet";
+import * as helmet from "helmet";
 import cors, { CorsOptions } from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
@@ -37,7 +37,26 @@ if (process.env.NODE_ENV === "development") {
 	app.use(cors())
 }
 
-app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+	directives: {
+		upgradeInsecureRequests: null
+	}
+}));
+
+app.use(helmet.crossOriginEmbedderPolicy());
+app.use(helmet.crossOriginOpenerPolicy());
+app.use(helmet.crossOriginResourcePolicy());
+app.use(helmet.dnsPrefetchControl());
+app.use(helmet.expectCt());
+app.use(helmet.frameguard());
+app.use(helmet.hidePoweredBy());
+app.use(helmet.hsts());
+app.use(helmet.ieNoOpen());
+app.use(helmet.noSniff());
+app.use(helmet.originAgentCluster());
+app.use(helmet.permittedCrossDomainPolicies());
+app.use(helmet.referrerPolicy());
+app.use(helmet.xssFilter());
 
 app.use(cookieParser("gig-Emm!!"));
 app.use(morgan("combined"));

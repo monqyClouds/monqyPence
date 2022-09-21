@@ -12,11 +12,11 @@
 		"watch": "concurrently  \"npm run server\" \"npm run client\"",
 		"deploy": "npm run build --prefix client && npm start --prefix server",
 		"deploy-cluster": "npm run build --prefix client && npm run cluster --prefix server",
-    "start": "npm run start --prefix server",
+    "deploy-docker": "npm run start --prefix server",
 		"test": "npm run test --prefix server && npm run test --prefix client"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "monqyClouds",
 	"engines": {
 		"node": "18.5.0"
 	},

@@ -21,7 +21,7 @@ export const AuthContextProvider = (props) => {
 	}, []);
 
 	const logoutHandler = async () => {
-		const res = await fetch("http://localhost:8000/user/logout");
+		const res = await fetch("/user/logout");
 
 		if (!res.ok) {
 			return;
@@ -67,7 +67,7 @@ async function fetchUserData(userData, isSignin = true) {
 	// Fetch User Data
 	try {
 		const res = await fetch(
-			`http://localhost:8000/user/${isSignin ? "signin" : "signup"}`,
+			`/user/${isSignin ? "signin" : "signup"}`,
 			{
 				method: "POST",
 				credentials: "include",
